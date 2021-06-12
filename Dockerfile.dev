@@ -1,0 +1,16 @@
+# Specify a base image
+FROM node:alpine
+
+WORKDIR '/app'
+
+# Install some dependencies
+COPY ./package.json .
+RUN npm install
+RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
+
+# Then, install the entire project
+# When i use volumes, the "COPY" is not necessary
+COPY . .
+
+# Default command
+CMD [ "npm", "run", "start" ]
